@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres_urbs:
+    image: postgres:15
+    container_name: urbs_db
+    environment:
+      - POSTGRES_USER=alissonfluck
+      - POSTGRES_PASSWORD=$2117010Dd
+      - POSTGRES_DB=urbs_analytics
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data

@@ -58,6 +58,16 @@ if __name__ == "__main__":
     if dados_veiculos:
         lista_veiculos = list(dados_veiculos.values())
         df_veiculos = pd.DataFrame(lista_veiculos)
+
+        # Transform
+        df_veiculos['LAT'] = df_veiculos['LAT'].astype(float)
+        df_veiculos['LON'] = df_veiculos['LON'].astype(float)
+
+        #DQ Anomalias GPS
+        filtro_lat = (df_veiculos['LAT'] >= -25.7) & (df_veiculos['LAT'] <= -25.3)
+        filtro_lon = (df_veiculos['LON'] >= -49.5) & (df_veiculos['LON'] <= -49.0)
+
+        df_veiculos = df_veiculos[filtro_lat & filtro_lon]
+        
         print(f"Total de veículos operando agora: {len(df_veiculos)}")
         carregar_dados_postgres(df_veiculos, "fato_posicao_veiculo", "append")
-
